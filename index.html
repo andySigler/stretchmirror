@@ -72,8 +72,8 @@
             	margin-left: -10px;
             }
             .arrow-up {
-				width: 0; 
-				height: 0; 
+				width: 0;
+				height: 0;
 				border-left: 30px solid transparent;
 				border-right: 30px solid transparent;
 				border-bottom: 30px solid rgb(100,150,100);
@@ -490,7 +490,12 @@
 
 			function gotStream(stream) {
 
-                video.src = webkitURL.createObjectURL(stream);
+                try {
+                    video.src = webkitURL.createObjectURL(stream);
+                }
+                catch (err) {
+                    video.srcObject = stream;
+                }
                 init();
             }
 
@@ -550,7 +555,7 @@
 					videoImageContext.scale(-1,1);
 					videoImageContext.drawImage( video, -(actualWidth-theSize)/2, 0,actualWidth,videoImage.height);
 					videoImageContext.restore();
-					if ( videoTexture ) 
+					if ( videoTexture )
 						videoTexture.needsUpdate = true;
 				}
 
@@ -589,7 +594,7 @@
 				reset();
 				drawLoop();
 			};
-			
+
 			requestVideo();
 
 			////////////////////////////////////////
